@@ -1,0 +1,17 @@
+{
+  "configurations": [
+    {
+      "name": "Win32",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "C:/Users/kosuk/qmk_firmware/**",
+        "C:/Users/kosuk/qmk_firmware/keyboards/**",
+        "C:/Users/kosuk/qmk_firmware/quantum/**",
+        "C:/Users/kosuk/qmk_firmware/platforms/**",
+        "C:/Users/kosuk/qmk_firmware/tmk_core/**"
+      ],
+      "defines": ["_DEBUG", "UNICODE", "_UNICODE"]
+    }
+  ],
+  "version": 4
+}
