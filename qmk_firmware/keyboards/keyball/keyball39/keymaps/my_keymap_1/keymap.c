@@ -30,18 +30,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case MACRO_PAREN:
             if (record->event.pressed) {
                 tap_code16(S(KC_8));
-                wait_ms(10);
+                wait_ms(25);
                 tap_code16(S(KC_9));
-                wait_ms(10);
+                wait_ms(25);
                 tap_code(KC_LEFT);
             }
             return false;
         case MACRO_BRAC:
             if (record->event.pressed) {
                 tap_code(KC_RBRC);
-                wait_ms(10);
+                wait_ms(25);
                 tap_code(KC_NUHS);
-                wait_ms(10);
+                wait_ms(25);
                 tap_code(KC_LEFT);
             }
             return false;
@@ -52,6 +52,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 const uint16_t PROGMEM qw_combo[] = {KC_Q, KC_W, COMBO_END};
 const uint16_t PROGMEM as_combo[] = {KC_A, KC_S, COMBO_END};
 const uint16_t PROGMEM op_combo[] = {KC_O, KC_P, COMBO_END};
+const uint16_t PROGMEM pl_combo[] = {KC_P, KC_L, COMBO_END};
 const uint16_t PROGMEM lmin_combo[] = {KC_L, KC_MINS, COMBO_END};
 const uint16_t PROGMEM jk_combo[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM df_combo[] = {KC_D, KC_F, COMBO_END};
@@ -80,13 +81,16 @@ combo_t key_combos[] = {
     COMBO(qw_combo, KC_ESC),
     COMBO(as_combo, KC_TAB),
     COMBO(op_combo, KC_BACKSPACE),
+    COMBO(pl_combo, KC_DELETE),
     COMBO(lmin_combo, KC_ENTER),
     COMBO(jk_combo, KC_LANGUAGE_1),
     COMBO(df_combo, KC_LANGUAGE_2),
-    COMBO(uo_combo, S(KC_8)),
-    COMBO(ip_combo, S(KC_9)),
-    COMBO(jl_combo, KC_RBRC),
-    COMBO(kminus_combo, KC_NUHS),
+    COMBO(uo_combo, KC_RBRC),
+    COMBO(ip_combo, KC_NUHS),
+    COMBO(jl_combo, S(KC_8)),
+    COMBO(up_combo, MACRO_BRAC),
+    COMBO(kminus_combo, S(KC_9)),
+    COMBO(jminus_combo, MACRO_PAREN),
     COMBO(mdot_combo, S(KC_RBRC)),
     COMBO(commslash_combo, S(KC_NUHS)),
     COMBO(qwe_combo, LALT(KC_F4)),
@@ -99,8 +103,6 @@ combo_t key_combos[] = {
     COMBO(kl_combo, KC_RSFT),
     COMBO(we_combo, QK_CAPS_WORD_TOGGLE),
     COMBO(io_combo, QK_CAPS_WORD_TOGGLE),
-    COMBO(up_combo, MACRO_PAREN),
-    COMBO(jminus_combo, MACRO_BRAC),
     COMBO(lboot_combo, QK_BOOT),
     COMBO(rboot_combo, QK_BOOT),
 };
