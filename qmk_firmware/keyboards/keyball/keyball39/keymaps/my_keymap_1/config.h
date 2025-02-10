@@ -13,18 +13,9 @@
 // #    define RGBLIGHT_EFFECT_TWINKLE
 #endif
 
-#define COMBO_COUNT 4
+#define TAP_CODE_DELAY 10
 
-#define TAP_CODE_DELAY 5
-#define TAPPING_TERM 230 
-
-#define POINTING_DEVICE_AUTO_MOUSE_ENABLE
 #define AUTO_MOUSE_DEFAULT_LAYER 2
-#define AUTO_MOUSE_TIME 780
 
-#define PERMISSIVE_HOLD
-// #    define RETRO_TAPPING
-
-#define COMBO_TERM 25    // コンボを認識する時間（ミリ秒）
-#define COMBO_MUST_TAP_PER_COMBO    // タップ必須にする（長押し無効）
+#define COMBO_TERM 28
 #define COMBO_ONLY_FROM_LAYER 0

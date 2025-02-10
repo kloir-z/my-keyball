@@ -20,17 +20,89 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "quantum.h"
 
-// コンボの定義
+enum custom_keycodes {
+    MACRO_PAREN = SAFE_RANGE,
+    MACRO_BRAC,
+};
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case MACRO_PAREN:
+            if (record->event.pressed) {
+                tap_code16(S(KC_8));
+                wait_ms(10);
+                tap_code16(S(KC_9));
+                wait_ms(10);
+                tap_code(KC_LEFT);
+            }
+            return false;
+        case MACRO_BRAC:
+            if (record->event.pressed) {
+                tap_code(KC_RBRC);
+                wait_ms(10);
+                tap_code(KC_NUHS);
+                wait_ms(10);
+                tap_code(KC_LEFT);
+            }
+            return false;
+    }
+    return true;
+}
+
 const uint16_t PROGMEM qw_combo[] = {KC_Q, KC_W, COMBO_END};
 const uint16_t PROGMEM as_combo[] = {KC_A, KC_S, COMBO_END};
+const uint16_t PROGMEM op_combo[] = {KC_O, KC_P, COMBO_END};
+const uint16_t PROGMEM lmin_combo[] = {KC_L, KC_MINS, COMBO_END};
 const uint16_t PROGMEM jk_combo[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM df_combo[] = {KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM uo_combo[] = {KC_U, KC_O, COMBO_END};
+const uint16_t PROGMEM ip_combo[] = {KC_I, KC_P, COMBO_END};
+const uint16_t PROGMEM jl_combo[] = {KC_J, KC_L, COMBO_END};
+const uint16_t PROGMEM kminus_combo[] = {KC_K, KC_MINS, COMBO_END};
+const uint16_t PROGMEM mdot_combo[] = {KC_M, KC_DOT, COMBO_END};
+const uint16_t PROGMEM commslash_combo[] = {KC_COMM, KC_SLSH, COMBO_END};
+const uint16_t PROGMEM qwe_combo[] = {KC_Q, KC_W, KC_E, COMBO_END};
+const uint16_t PROGMEM wr_combo[] = {KC_W, KC_R, COMBO_END};
+const uint16_t PROGMEM sf_combo[] = {KC_S, KC_F, COMBO_END};
+const uint16_t PROGMEM xv_combo[] = {KC_X, KC_V, COMBO_END};
+const uint16_t PROGMEM ad_combo[] = {KC_A, KC_D, COMBO_END};
+const uint16_t PROGMEM dg_combo[] = {KC_D, KC_G, COMBO_END};
+const uint16_t PROGMEM sd_combo[] = {KC_S, KC_D, COMBO_END};
 const uint16_t PROGMEM kl_combo[] = {KC_K, KC_L, COMBO_END};
+const uint16_t PROGMEM we_combo[] = {KC_W, KC_E, COMBO_END};
+const uint16_t PROGMEM io_combo[] = {KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM up_combo[] = {KC_U, KC_P, COMBO_END};
+const uint16_t PROGMEM jminus_combo[] = {KC_J, KC_MINS, COMBO_END};
+const uint16_t PROGMEM lboot_combo[] = {KC_Q, KC_W, KC_V, KC_B, COMBO_END};
+const uint16_t PROGMEM rboot_combo[] = {KC_N, KC_M, KC_O, KC_P, COMBO_END};
 
 combo_t key_combos[] = {
-    COMBO(qw_combo, KC_ESC),          // Q + W = ESC
-    COMBO(as_combo, KC_TAB),          // A + S = TAB
-    COMBO(jk_combo, S(KC_8)),         // J + K = (
-    COMBO(kl_combo, S(KC_9)),         // K + L = )
+    COMBO(qw_combo, KC_ESC),
+    COMBO(as_combo, KC_TAB),
+    COMBO(op_combo, KC_BACKSPACE),
+    COMBO(lmin_combo, KC_ENTER),
+    COMBO(jk_combo, KC_LANGUAGE_1),
+    COMBO(df_combo, KC_LANGUAGE_2),
+    COMBO(uo_combo, S(KC_8)),
+    COMBO(ip_combo, S(KC_9)),
+    COMBO(jl_combo, KC_RBRC),
+    COMBO(kminus_combo, KC_NUHS),
+    COMBO(mdot_combo, S(KC_RBRC)),
+    COMBO(commslash_combo, S(KC_NUHS)),
+    COMBO(qwe_combo, LALT(KC_F4)),
+    COMBO(wr_combo, S(KC_SCLN)),
+    COMBO(sf_combo, KC_MINS),
+    COMBO(xv_combo, S(KC_QUOT)),
+    COMBO(ad_combo, KC_SLSH),
+    COMBO(dg_combo, S(KC_MINS)),
+    COMBO(sd_combo, KC_LSFT),
+    COMBO(kl_combo, KC_RSFT),
+    COMBO(we_combo, QK_CAPS_WORD_TOGGLE),
+    COMBO(io_combo, QK_CAPS_WORD_TOGGLE),
+    COMBO(up_combo, MACRO_PAREN),
+    COMBO(jminus_combo, MACRO_BRAC),
+    COMBO(lboot_combo, QK_BOOT),
+    COMBO(rboot_combo, QK_BOOT),
 };
 
 // clang-format off
@@ -44,24 +116,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [1] = LAYOUT_universal(
-    KC_F1    , KC_F2    , KC_F3    , KC_F4    , KC_RBRC  ,                            KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   ,
-    KC_F5    , KC_EXLM  , S(KC_6)  ,S(KC_INT3), S(KC_8)  ,                           S(KC_INT1), KC_BTN1  , KC_PGUP  , KC_BTN2  , KC_SCLN  ,
-    S(KC_EQL),S(KC_LBRC),S(KC_7)   , S(KC_2)  ,S(KC_RBRC),                            KC_LBRC  , KC_DLR   , KC_PGDN  , KC_BTN3  , KC_F11   ,
-    KC_INT1  , KC_EQL   , S(KC_3)  , _______  , _______  , _______  ,      TO(2)    , TO(0)    , _______  , KC_RALT  , KC_RGUI  , KC_F12
+    _______  , _______  , _______  , _______  , _______  ,                            _______  , _______  , _______ , _______ , _______ ,
+    _______  , _______  , _______  , _______  , _______  ,                            _______  , _______  , _______ , _______ , _______ ,
+    _______  , _______  , _______  , _______  , _______  ,                            _______  , _______  , _______ , _______ , _______ ,
+    _______  , _______  , _______  , _______  , _______  , _______  ,      _______  , _______  , _______  , _______ , _______ , _______ 
   ),
 
   [2] = LAYOUT_universal(
-    KC_TAB   , KC_7     , KC_8     , KC_9     , KC_MINS  ,                            KC_NUHS  , _______  , KC_BTN3  , _______  , KC_BSPC  ,
-   S(KC_QUOT), KC_4     , KC_5     , KC_6     ,S(KC_SCLN),                            S(KC_9)  , KC_BTN1  , KC_UP    , KC_BTN2  , KC_QUOT  ,
-    KC_SLSH  , KC_1     , KC_2     , KC_3     ,S(KC_MINS),                           S(KC_NUHS), KC_LEFT  , KC_DOWN  , KC_RGHT  , _______  ,
-    KC_ESC   , KC_0     , KC_DOT   , KC_DEL   , KC_ENT   , KC_BSPC  ,      _______  , _______  , _______  , _______  , _______  , _______
+    _______  , _______  , _______  , _______  , _______  ,                            _______  , _______  , _______ , _______ , _______ ,
+    _______  , _______  , _______  , _______  , _______  ,                            _______  , _______  , _______ , _______ , _______ ,
+    _______  , _______  , _______  , _______  , _______  ,                            _______  , _______  , _______ , _______ , _______ ,
+    _______  , _______  , _______  , _______  , _______  , _______  ,      _______  , _______  , _______  , _______ , _______ , _______ 
   ),
 
   [3] = LAYOUT_universal(
-    _______  , _______   , _______  , _______  , _______  ,                            _______  , _______  , _______ , _______ , _______ ,
-    _______  , _______  , _______  , _______  , _______ ,                            _______  , _______  , _______  , _______  , _______  ,
-    _______ , _______  , _______  , _______  , _______ ,                            _______  , _______ , _______ , _______  , _______ ,
-    _______  , _______  , _______  , _______  , _______  , _______  ,      _______  , _______  , _______  , _______  , _______  ,_______ 
+    _______  , _______  , _______  , _______  , _______  ,                            _______  , _______  , _______ , _______ , _______ ,
+    _______  , _______  , _______  , _______  , _______  ,                            _______  , _______  , _______ , _______ , _______ ,
+    _______  , _______  , _______  , _______  , _______  ,                            _______  , _______  , _______ , _______ , _______ ,
+    _______  , _______  , _______  , _______  , _______  , _______  ,      _______  , _______  , _______  , _______ , _______ , _______ 
   ),
 };
 // clang-format on
