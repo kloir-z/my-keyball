@@ -13,7 +13,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+along with this program.  If not, see <http://www.gnu.org/licensed/>.
 */
 
 #include QMK_KEYBOARD_H
@@ -58,8 +58,10 @@ const uint16_t PROGMEM jk_combo[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM df_combo[] = {KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM uo_combo[] = {KC_U, KC_O, COMBO_END};
 const uint16_t PROGMEM ip_combo[] = {KC_I, KC_P, COMBO_END};
+const uint16_t PROGMEM up_combo[] = {KC_U, KC_P, COMBO_END};
 const uint16_t PROGMEM jl_combo[] = {KC_J, KC_L, COMBO_END};
 const uint16_t PROGMEM kminus_combo[] = {KC_K, KC_MINS, COMBO_END};
+const uint16_t PROGMEM jminus_combo[] = {KC_J, KC_MINS, COMBO_END};
 const uint16_t PROGMEM mdot_combo[] = {KC_M, KC_DOT, COMBO_END};
 const uint16_t PROGMEM commslash_combo[] = {KC_COMM, KC_SLSH, COMBO_END};
 const uint16_t PROGMEM qwe_combo[] = {KC_Q, KC_W, KC_E, COMBO_END};
@@ -72,8 +74,6 @@ const uint16_t PROGMEM sd_combo[] = {KC_S, KC_D, COMBO_END};
 const uint16_t PROGMEM kl_combo[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM we_combo[] = {KC_W, KC_E, COMBO_END};
 const uint16_t PROGMEM io_combo[] = {KC_I, KC_O, COMBO_END};
-const uint16_t PROGMEM up_combo[] = {KC_U, KC_P, COMBO_END};
-const uint16_t PROGMEM jminus_combo[] = {KC_J, KC_MINS, COMBO_END};
 const uint16_t PROGMEM lboot_combo[] = {KC_Q, KC_W, KC_V, KC_B, COMBO_END};
 const uint16_t PROGMEM rboot_combo[] = {KC_N, KC_M, KC_O, KC_P, COMBO_END};
 
@@ -87,8 +87,8 @@ combo_t key_combos[] = {
     COMBO(df_combo, KC_LANGUAGE_2),
     COMBO(uo_combo, KC_RBRC),
     COMBO(ip_combo, KC_NUHS),
-    COMBO(jl_combo, S(KC_8)),
     COMBO(up_combo, MACRO_BRAC),
+    COMBO(jl_combo, S(KC_8)),
     COMBO(kminus_combo, S(KC_9)),
     COMBO(jminus_combo, MACRO_PAREN),
     COMBO(mdot_combo, S(KC_RBRC)),
