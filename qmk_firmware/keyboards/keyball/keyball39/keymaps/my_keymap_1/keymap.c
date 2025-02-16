@@ -20,9 +20,13 @@ along with this program.  If not, see <http://www.gnu.org/licensed/>.
 
 #include "quantum.h"
 
+static uint16_t combo_timer = 0;
+
 enum custom_keycodes {
     MACRO_PAREN = SAFE_RANGE,
     MACRO_BRAC,
+    COMBO_ESC_LANG2,
+    COMBO_SHIFT,
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -45,40 +49,60 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code(KC_LEFT);
             }
             return false;
+        case COMBO_ESC_LANG2:
+            if (record->event.pressed) {
+                tap_code(KC_ESC);
+                tap_code(KC_LANGUAGE_2);
+            }
+            return false;
+        case COMBO_SHIFT:
+            if (record->event.pressed) {
+                combo_timer = timer_read();
+                register_mods(MOD_LSFT);
+            } else {
+                if (timer_elapsed(combo_timer) < TAPPING_TERM) {
+                    unregister_mods(MOD_LSFT);
+                    set_oneshot_mods(MOD_LSFT);
+                } else {
+                    unregister_mods(MOD_LSFT);
+                }
+            }
+            return false;
     }
     return true;
 }
 
-const uint16_t PROGMEM qw_combo[] = {KC_Q, KC_W, COMBO_END};
-const uint16_t PROGMEM as_combo[] = {KC_A, KC_S, COMBO_END};
-const uint16_t PROGMEM op_combo[] = {KC_O, KC_P, COMBO_END};
-const uint16_t PROGMEM pl_combo[] = {KC_P, KC_L, COMBO_END};
-const uint16_t PROGMEM lmin_combo[] = {KC_L, KC_MINS, COMBO_END};
-const uint16_t PROGMEM jk_combo[] = {KC_J, KC_K, COMBO_END};
-const uint16_t PROGMEM df_combo[] = {KC_D, KC_F, COMBO_END};
-const uint16_t PROGMEM uo_combo[] = {KC_U, KC_O, COMBO_END};
-const uint16_t PROGMEM ip_combo[] = {KC_I, KC_P, COMBO_END};
-const uint16_t PROGMEM up_combo[] = {KC_U, KC_P, COMBO_END};
-const uint16_t PROGMEM jl_combo[] = {KC_J, KC_L, COMBO_END};
-const uint16_t PROGMEM kminus_combo[] = {KC_K, KC_MINS, COMBO_END};
-const uint16_t PROGMEM jminus_combo[] = {KC_J, KC_MINS, COMBO_END};
-const uint16_t PROGMEM mdot_combo[] = {KC_M, KC_DOT, COMBO_END};
-const uint16_t PROGMEM commslash_combo[] = {KC_COMM, KC_SLSH, COMBO_END};
-const uint16_t PROGMEM qwe_combo[] = {KC_Q, KC_W, KC_E, COMBO_END};
-const uint16_t PROGMEM wr_combo[] = {KC_W, KC_R, COMBO_END};
-const uint16_t PROGMEM sf_combo[] = {KC_S, KC_F, COMBO_END};
-const uint16_t PROGMEM xv_combo[] = {KC_X, KC_V, COMBO_END};
-const uint16_t PROGMEM ad_combo[] = {KC_A, KC_D, COMBO_END};
-const uint16_t PROGMEM dg_combo[] = {KC_D, KC_G, COMBO_END};
-const uint16_t PROGMEM sd_combo[] = {KC_S, KC_D, COMBO_END};
-const uint16_t PROGMEM kl_combo[] = {KC_K, KC_L, COMBO_END};
-const uint16_t PROGMEM we_combo[] = {KC_W, KC_E, COMBO_END};
-const uint16_t PROGMEM io_combo[] = {KC_I, KC_O, COMBO_END};
-const uint16_t PROGMEM lboot_combo[] = {KC_Q, KC_W, KC_V, KC_B, COMBO_END};
-const uint16_t PROGMEM rboot_combo[] = {KC_N, KC_M, KC_O, KC_P, COMBO_END};
+const uint16_t PROGMEM qw_combo[]         = {KC_Q, KC_W, COMBO_END};
+const uint16_t PROGMEM as_combo[]         = {KC_A, KC_S, COMBO_END};
+const uint16_t PROGMEM op_combo[]         = {KC_O, KC_P, COMBO_END};
+const uint16_t PROGMEM pl_combo[]         = {KC_P, KC_L, COMBO_END};
+const uint16_t PROGMEM lmin_combo[]       = {KC_L, KC_MINS, COMBO_END};
+const uint16_t PROGMEM jk_combo[]         = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM df_combo[]         = {KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM uo_combo[]         = {KC_U, KC_O, COMBO_END};
+const uint16_t PROGMEM ip_combo[]         = {KC_I, KC_P, COMBO_END};
+const uint16_t PROGMEM up_combo[]         = {KC_U, KC_P, COMBO_END};
+const uint16_t PROGMEM jl_combo[]         = {KC_J, KC_L, COMBO_END};
+const uint16_t PROGMEM kminus_combo[]     = {KC_K, KC_MINS, COMBO_END};
+const uint16_t PROGMEM jminus_combo[]     = {KC_J, KC_MINS, COMBO_END};
+const uint16_t PROGMEM mdot_combo[]       = {KC_M, KC_DOT, COMBO_END};
+const uint16_t PROGMEM commslash_combo[]  = {KC_COMM, KC_SLSH, COMBO_END};
+const uint16_t PROGMEM qwe_combo[]        = {KC_Q, KC_W, KC_E, COMBO_END};
+const uint16_t PROGMEM wr_combo[]         = {KC_W, KC_R, COMBO_END};
+const uint16_t PROGMEM sf_combo[]         = {KC_S, KC_F, COMBO_END};
+const uint16_t PROGMEM xv_combo[]         = {KC_X, KC_V, COMBO_END};
+const uint16_t PROGMEM ad_combo[]         = {KC_A, KC_D, COMBO_END};
+const uint16_t PROGMEM dg_combo[]         = {KC_D, KC_G, COMBO_END};
+const uint16_t PROGMEM sd_combo[]         = {KC_S, KC_D, COMBO_END};
+const uint16_t PROGMEM ctrl_shift_combo[] = {KC_LCTL, KC_S, KC_D, COMBO_END};
+const uint16_t PROGMEM kl_combo[]         = {KC_K, KC_L, COMBO_END};
+const uint16_t PROGMEM we_combo[]         = {KC_W, KC_E, COMBO_END};
+const uint16_t PROGMEM io_combo[]         = {KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM lboot_combo[]      = {KC_Q, KC_W, KC_V, KC_B, COMBO_END};
+const uint16_t PROGMEM rboot_combo[]      = {KC_N, KC_M, KC_O, KC_P, COMBO_END};
 
 combo_t key_combos[] = {
-    COMBO(qw_combo, KC_ESC),
+    COMBO(qw_combo, COMBO_ESC_LANG2),
     COMBO(as_combo, KC_TAB),
     COMBO(op_combo, KC_BACKSPACE),
     COMBO(pl_combo, KC_DELETE),
@@ -99,8 +123,9 @@ combo_t key_combos[] = {
     COMBO(xv_combo, S(KC_QUOT)),
     COMBO(ad_combo, KC_SLSH),
     COMBO(dg_combo, S(KC_MINS)),
-    COMBO(sd_combo, KC_LSFT),
-    COMBO(kl_combo, KC_RSFT),
+    COMBO(sd_combo, COMBO_SHIFT),
+    COMBO(kl_combo, COMBO_SHIFT),
+    COMBO(ctrl_shift_combo, C(S(KC_NO))),
     COMBO(we_combo, QK_CAPS_WORD_TOGGLE),
     COMBO(io_combo, QK_CAPS_WORD_TOGGLE),
     COMBO(lboot_combo, QK_BOOT),
